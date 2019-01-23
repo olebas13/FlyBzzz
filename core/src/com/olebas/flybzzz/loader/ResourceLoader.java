@@ -1,6 +1,5 @@
 package com.olebas.flybzzz.loader;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -48,6 +47,7 @@ public class ResourceLoader {
         atlas = new TextureAtlas(files.internal("texture/texture.pack"), true);
 
         logo = new Sprite(atlas.findRegion("logo"));
+        logo.flip(false, true);
         playButtonUp = new Sprite(atlas.findRegion("buttonOff"));
         playButtonDown = new Sprite(atlas.findRegion("buttonOn"));
         ready = new Sprite(atlas.findRegion("tapToFly"));
@@ -57,7 +57,7 @@ public class ResourceLoader {
         starOn = new Sprite(atlas.findRegion("starOn"));
         starOff = new Sprite(atlas.findRegion("starOff"));
         highScore = new Sprite(atlas.findRegion("highScore"));
-        flyAndSpiders = new Sprite(atlas.findRegion("flyAndSpiders"));
+        flyAndSpiders = new Sprite(atlas.findRegion("flyAndSpyders"));
         background = new Sprite(atlas.findRegion("background"));
         grass = new Sprite(atlas.findRegion("grass"));
         fly1 = new Sprite(atlas.findRegion("fly1"));

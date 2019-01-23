@@ -2,13 +2,20 @@ package com.olebas.flybzzz.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.olebas.flybzzz.FlyBzzz;
 import com.olebas.flybzzz.loader.ResourceLoader;
+import com.olebas.flybzzz.tools.SpriteAccessor;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
+import static com.badlogic.gdx.Gdx.*;
 import static com.badlogic.gdx.Gdx.graphics;
 
 public class SplashScreen implements Screen {
@@ -27,11 +34,43 @@ public class SplashScreen implements Screen {
         sprite = new Sprite(ResourceLoader.logo);
         sprite.setColor(1, 1, 1, 0);
         float width = graphics.getWidth();
+        float height = graphics.getHeight();
+        float desiredWidth = width * 0.7f;
+        float scale = desiredWidth / sprite.getWidth();
+
+        sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+        sprite.setPosition((width / 2) - (sprite.getWidth() / 2), (height / 2) - (sprite.getHeight() / 2));
+
+        setupTween();
+        batch = new SpriteBatch();
+    }
+
+    private void setupTween() {
+        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+        manager = new TweenManager();
+
+        TweenCallback callback = new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+
+            }
+        };
+
+        Tween.to(sprite, SpriteAccessor.ALPHA, 0.8f).target(1)
+                .ease(TweenEquations.easeInOutQuad).repeatYoyo(1, 0.4f)
+                .setCallback(callback).setCallbackTriggers(TweenCallback.COMPLETE)
+                .start(manager);
+
     }
 
     @Override
     public void render(float delta) {
-
+        manager.update(delta);
+        gl.glClearColor(1, 1, 1, 1);
+        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
     }
 
     @Override
