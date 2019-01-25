@@ -1,5 +1,6 @@
 package com.olebas.flybzzz.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.olebas.flybzzz.game.GameRender;
 import com.olebas.flybzzz.game.GameWorld;
@@ -10,8 +11,15 @@ public class GameScreen implements Screen {
     private GameRender renderer;
 
     public GameScreen() {
-        world = new GameWorld(world);
-        renderer = new GameRender();
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float gameWidth = 136;
+        float gameHeight = screenHeight / (screenHeight / gameWidth);
+        int midPointY = (int) (gameHeight / 2);
+        int midPointX = (int) (gameWidth / 2);
+
+        world = new GameWorld(midPointY, midPointX);
+        renderer = new GameRender(world, (int) gameHeight, midPointY, midPointX);
     }
 
     @Override
